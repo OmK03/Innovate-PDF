@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <h1>Modern PDF toolkit in your browser.</h1>
+    <p>
+      Merge, split, rotate, protect, and extract text from PDFs with a clean, 
+      professional interface powered by Flask.
+    </p>
+  </div>
+</section>
+
+<section class="cards-grid">
+  <!-- Merge PDFs -->
+  <article class="card">
+    <h2>Merge PDFs</h2>
+    <p>Combine multiple PDF files into one seamless document.</p>
+    <form
+      action="{{ url_for('merge_pdfs') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">Select PDF files</span>
+        <input
+          type="file"
+          name="merge_files"
+          accept="application/pdf"
+          multiple
+          required
+        />
+      </label>
+      <button type="submit" class="btn-primary">Merge &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Split PDF -->
+  <article class="card">
+    <h2>Split PDF</h2>
+    <p>
+      Extract specific pages from a PDF using flexible page ranges like
+      <code>1-3,5,7-9</code>.
+    </p>
+    <form
+      action="{{ url_for('split_pdf') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="split_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Pages to keep</span>
+        <input
+          type="text"
+          name="pages_range"
+          placeholder="Example: 1-3,5,7-9"
+          required
+        />
+      </label>
+      <button type="submit" class="btn-primary">Split &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Extract Text -->
+  <article class="card">
+    <h2>Extract Text</h2>
+    <p>Pull out all extractable text as a single plain-text file.</p>
+    <form
+      action="{{ url_for('extract_text') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="text_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <button type="submit" class="btn-primary">Extract &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Rotate PDF -->
+  <article class="card">
+    <h2>Rotate PDF <span class="feature-badge">New</span></h2>
+    <p>Rotate all pages in your PDF by 90, 180, or 270 degrees.</p>
+    <form
+      action="{{ url_for('rotate_pdf') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="rotate_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Rotation angle</span>
+        <select name="rotation" required>
+          <option value="90">90° clockwise</option>
+          <option value="180">180° (upside down)</option>
+          <option value="270">270° (90° counter-clockwise)</option>
+        </select>
+      </label>
+      <button type="submit" class="btn-primary">Rotate &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Protect PDF -->
+  <article class="card">
+    <h2>Protect PDF <span class="feature-badge">New</span></h2>
+    <p>Add password protection to secure your PDF documents.</p>
+    <form
+      action="{{ url_for('protect_pdf') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="protect_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Password (min 4 characters)</span>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter secure password"
+          minlength="4"
+          required
+        />
+      </label>
+      <button type="submit" class="btn-primary">Protect &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Compress PDF -->
+  <article class="card">
+    <h2>Compress PDF <span class="feature-badge">New</span></h2>
+    <p>Reduce PDF file size by compressing content and images.</p>
+    <form
+      action="{{ url_for('compress_pdf') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="compress_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <button type="submit" class="btn-primary">Compress &amp; Download</button>
+    </form>
+  </article>
+
+  <!-- Edit Metadata -->
+  <article class="card">
+    <h2>Edit Metadata <span class="feature-badge">New</span></h2>
+    <p>Update PDF properties like title, author, and subject.</p>
+    <form
+      action="{{ url_for('edit_metadata') }}"
+      method="post"
+      enctype="multipart/form-data"
+      class="card-form"
+    >
+      <label class="field">
+        <span class="field-label">PDF file</span>
+        <input
+          type="file"
+          name="metadata_file"
+          accept="application/pdf"
+          required
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Title (optional)</span>
+        <input
+          type="text"
+          name="title"
+          placeholder="Document title"
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Author (optional)</span>
+        <input
+          type="text"
+          name="author"
+          placeholder="Author name"
+        />
+      </label>
+      <label class="field">
+        <span class="field-label">Subject (optional)</span>
+        <input
+          type="text"
+          name="subject"
+          placeholder="Document subject"
+        />
+      </label>
+      <button type="submit" class="btn-primary">Update &amp; Download</button>
+    </form>
+  </article>
+</section>
+{% endblock %}
