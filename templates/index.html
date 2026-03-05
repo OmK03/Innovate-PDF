@@ -1,231 +1,229 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<!-- Hero -->
 <section class="hero">
-  <div class="hero-text">
-    <h1>Modern PDF toolkit in your browser.</h1>
-    <p>
-      Merge, split, rotate, protect, and extract text from PDFs with a clean, 
-      professional interface powered by Flask.
-    </p>
+  <div class="hero-eyebrow">Professional PDF Tools</div>
+  <h1 class="hero-title">
+    Everything you need to<br>
+    work with <span>PDF files</span>
+  </h1>
+  <p class="hero-subtitle">
+    Merge, split, rotate, protect, compress, and extract text from your PDF documents — all processed securely in your own environment.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-number">7</span>
+      <span class="stat-label">Tools</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">16 MB</span>
+      <span class="stat-label">Max File Size</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Private</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">Free</span>
+      <span class="stat-label">No Account</span>
+    </div>
   </div>
 </section>
 
-<section class="cards-grid">
+<!-- Tools Section -->
+<div class="section-header">
+  <h2 class="section-title">Select a tool to get started</h2>
+  <p class="section-subtitle">Upload your file and we'll handle the rest — results download instantly.</p>
+</div>
+
+<div class="cards-grid">
+
   <!-- Merge PDFs -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M8 6H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+        <path d="M16 6h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-3"/>
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <polyline points="9 9 12 6 15 9"/>
+        <polyline points="9 15 12 18 15 15"/>
+      </svg>
+    </div>
     <h2>Merge PDFs</h2>
-    <p>Combine multiple PDF files into one seamless document.</p>
-    <form
-      action="{{ url_for('merge_pdfs') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Combine multiple PDF files into one seamless document. Select two or more files and download the merged result.</p>
+    <form action="{{ url_for('merge_pdfs') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">Select PDF files</span>
-        <input
-          type="file"
-          name="merge_files"
-          accept="application/pdf"
-          multiple
-          required
-        />
+        <span class="field-label">PDF Files</span>
+        <input type="file" name="merge_files" accept="application/pdf" multiple required />
       </label>
-      <button type="submit" class="btn-primary">Merge &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Merge &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Split PDF -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <line x1="12" y1="2" x2="12" y2="22"/>
+        <path d="M5 8H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3"/>
+        <path d="M19 8h3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-3"/>
+        <polyline points="9 9 12 6 15 9"/>
+        <polyline points="9 15 12 18 15 15"/>
+      </svg>
+    </div>
     <h2>Split PDF</h2>
-    <p>
-      Extract specific pages from a PDF using flexible page ranges like
-      <code>1-3,5,7-9</code>.
-    </p>
-    <form
-      action="{{ url_for('split_pdf') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Extract specific pages using flexible ranges like <code>1-3,5,7-9</code>. Keep exactly the pages you need.</p>
+    <form action="{{ url_for('split_pdf') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="split_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="split_file" accept="application/pdf" required />
       </label>
       <label class="field">
-        <span class="field-label">Pages to keep</span>
-        <input
-          type="text"
-          name="pages_range"
-          placeholder="Example: 1-3,5,7-9"
-          required
-        />
+        <span class="field-label">Pages to Keep</span>
+        <input type="text" name="pages_range" placeholder="e.g. 1-3, 5, 7-9" required />
       </label>
-      <button type="submit" class="btn-primary">Split &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Split &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Extract Text -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+    </div>
     <h2>Extract Text</h2>
-    <p>Pull out all extractable text as a single plain-text file.</p>
-    <form
-      action="{{ url_for('extract_text') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Pull all extractable text from a PDF and download it as a clean plain-text file, page by page.</p>
+    <form action="{{ url_for('extract_text') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="text_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="text_file" accept="application/pdf" required />
       </label>
-      <button type="submit" class="btn-primary">Extract &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Extract &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Rotate PDF -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+    </div>
     <h2>Rotate PDF <span class="feature-badge">New</span></h2>
-    <p>Rotate all pages in your PDF by 90, 180, or 270 degrees.</p>
-    <form
-      action="{{ url_for('rotate_pdf') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Rotate all pages in your PDF clockwise or counter-clockwise by 90°, 180°, or 270°.</p>
+    <form action="{{ url_for('rotate_pdf') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="rotate_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="rotate_file" accept="application/pdf" required />
       </label>
       <label class="field">
-        <span class="field-label">Rotation angle</span>
+        <span class="field-label">Rotation Angle</span>
         <select name="rotation" required>
-          <option value="90">90° clockwise</option>
-          <option value="180">180° (upside down)</option>
-          <option value="270">270° (90° counter-clockwise)</option>
+          <option value="90">90° Clockwise</option>
+          <option value="180">180° (Upside Down)</option>
+          <option value="270">270° (Counter-Clockwise)</option>
         </select>
       </label>
-      <button type="submit" class="btn-primary">Rotate &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Rotate &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Protect PDF -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    </div>
     <h2>Protect PDF <span class="feature-badge">New</span></h2>
-    <p>Add password protection to secure your PDF documents.</p>
-    <form
-      action="{{ url_for('protect_pdf') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Add AES-256 password protection to your PDF to prevent unauthorized access.</p>
+    <form action="{{ url_for('protect_pdf') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="protect_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="protect_file" accept="application/pdf" required />
       </label>
       <label class="field">
-        <span class="field-label">Password (min 4 characters)</span>
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter secure password"
-          minlength="4"
-          required
-        />
+        <span class="field-label">Password (min. 4 characters)</span>
+        <input type="password" name="password" placeholder="Enter a secure password" minlength="4" required />
       </label>
-      <button type="submit" class="btn-primary">Protect &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Protect &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Compress PDF -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <polyline points="4 14 10 14 10 20"/>
+        <polyline points="20 10 14 10 14 4"/>
+        <line x1="14" y1="10" x2="21" y2="3"/>
+        <line x1="3" y1="21" x2="10" y2="14"/>
+      </svg>
+    </div>
     <h2>Compress PDF <span class="feature-badge">New</span></h2>
-    <p>Reduce PDF file size by compressing content and images.</p>
-    <form
-      action="{{ url_for('compress_pdf') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Reduce PDF file size by compressing content streams and optimizing embedded images.</p>
+    <form action="{{ url_for('compress_pdf') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="compress_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="compress_file" accept="application/pdf" required />
       </label>
-      <button type="submit" class="btn-primary">Compress &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Compress &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
 
   <!-- Edit Metadata -->
   <article class="card">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+    </div>
     <h2>Edit Metadata <span class="feature-badge">New</span></h2>
-    <p>Update PDF properties like title, author, and subject.</p>
-    <form
-      action="{{ url_for('edit_metadata') }}"
-      method="post"
-      enctype="multipart/form-data"
-      class="card-form"
-    >
+    <p>Update your PDF's internal properties — title, author, and subject — without altering content.</p>
+    <form action="{{ url_for('edit_metadata') }}" method="post" enctype="multipart/form-data" class="card-form">
       <label class="field">
-        <span class="field-label">PDF file</span>
-        <input
-          type="file"
-          name="metadata_file"
-          accept="application/pdf"
-          required
-        />
+        <span class="field-label">PDF File</span>
+        <input type="file" name="metadata_file" accept="application/pdf" required />
       </label>
       <label class="field">
         <span class="field-label">Title (optional)</span>
-        <input
-          type="text"
-          name="title"
-          placeholder="Document title"
-        />
+        <input type="text" name="title" placeholder="Document title" />
       </label>
       <label class="field">
         <span class="field-label">Author (optional)</span>
-        <input
-          type="text"
-          name="author"
-          placeholder="Author name"
-        />
+        <input type="text" name="author" placeholder="Author name" />
       </label>
       <label class="field">
         <span class="field-label">Subject (optional)</span>
-        <input
-          type="text"
-          name="subject"
-          placeholder="Document subject"
-        />
+        <input type="text" name="subject" placeholder="Document subject" />
       </label>
-      <button type="submit" class="btn-primary">Update &amp; Download</button>
+      <button type="submit" class="btn-primary">
+        Update &amp; Download <span class="btn-arrow">→</span>
+      </button>
     </form>
   </article>
-</section>
+
+</div>
 {% endblock %}

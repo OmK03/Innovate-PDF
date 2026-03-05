@@ -3,36 +3,65 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Modern PDF toolkit - merge, split, rotate, protect, and extract text from PDFs" />
+    <meta name="description" content="PDF Studio — professional PDF tools. Merge, split, rotate, protect, compress, and extract text from PDFs." />
     <meta name="author" content="PDF Studio" />
-    <title>{% block title %}PDF Studio - Modern PDF Toolkit{% endblock %}</title>
-    <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='styles.css') }}"
-    />
+    <title>{% block title %}PDF Studio — Professional PDF Toolkit{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="loading-spinner"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
+      <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <span class="loading-text">Processing your PDF…</span>
+      </div>
     </div>
 
     <div class="app-root">
+
+      <!-- Header -->
       <header class="app-header">
-        <div class="logo">
-          <span class="logo-mark">PDF</span>
-          <span class="logo-text">Studio</span>
-        </div>
-        <div class="header-right">
-          <span class="tag">Flask · PDF tools</span>
+        <div class="header-inner">
+          <a href="{{ url_for('index') }}" class="logo">
+            <div class="logo-icon">
+              <!-- PDF icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8.5 17.5H8v1H7v-4h1.5a1.5 1.5 0 0 1 0 3zm3.75 0a1.75 1.75 0 0 1-1.75 1.75H9.5v-4H10.5a1.75 1.75 0 0 1 1.75 1.75v.5zm3.25-2.5h-2v1h1.5v1H13.5v1.5H12.5v-4H15.5v.5z"/>
+              </svg>
+            </div>
+            <span class="logo-name">PDF<span>Studio</span></span>
+          </a>
+          <nav class="header-nav">
+            <span class="nav-badge">Flask · pypdf · Open Source</span>
+          </nav>
         </div>
       </header>
 
+      <!-- Main Content -->
       <main class="app-main">
+
+        <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-        <div class="flash-container">
+        <div class="flash-container" role="alert">
           {% for category, message in messages %}
           <div class="flash flash-{{ category }}">
+            {% if category == 'success' %}
+            <svg class="flash-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            {% elif category == 'error' %}
+            <svg class="flash-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+            {% else %}
+            <svg class="flash-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
+            {% endif %}
             <span>{{ message }}</span>
           </div>
           {% endfor %}
@@ -41,56 +70,44 @@
         {% endwith %}
 
         {% block content %}{% endblock %}
+
       </main>
 
+      <!-- Footer -->
       <footer class="app-footer">
-        <span>Built with Flask &amp; pypdf</span>
-        <span>Open Source · MIT License</span>
+        <div class="footer-inner">
+          <span>© 2025 PDF Studio. Built with Flask &amp; pypdf.</span>
+          <span>Open Source · MIT License</span>
+        </div>
       </footer>
+
     </div>
 
     <script>
-      // Show loading overlay on form submit
-      document.addEventListener('DOMContentLoaded', function() {
-        const forms = document.querySelectorAll('form');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        
-        forms.forEach(form => {
-          form.addEventListener('submit', function(e) {
-            // Check if form is valid
+      document.addEventListener('DOMContentLoaded', function () {
+        const overlay = document.getElementById('loadingOverlay');
+
+        // Show loading on form submit
+        document.querySelectorAll('form').forEach(form => {
+          form.addEventListener('submit', function () {
             if (form.checkValidity()) {
-              loadingOverlay.classList.add('active');
+              overlay.classList.add('active');
             }
           });
         });
 
-        // Auto-hide flash messages after 5 seconds
-        const flashMessages = document.querySelectorAll('.flash');
-        flashMessages.forEach(flash => {
-          setTimeout(() => {
-            flash.style.animation = 'slideOut 0.3s ease-out';
-            setTimeout(() => {
-              flash.remove();
-            }, 300);
-          }, 5000);
+        // Auto-dismiss flash messages after 5s
+        const fadeOut = el => {
+          el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(-6px)';
+          setTimeout(() => el.remove(), 400);
+        };
+
+        document.querySelectorAll('.flash').forEach(flash => {
+          setTimeout(() => fadeOut(flash), 5000);
         });
       });
-
-      // Add slideOut animation
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes slideOut {
-          from {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          to {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-        }
-      `;
-      document.head.appendChild(style);
     </script>
   </body>
 </html>
